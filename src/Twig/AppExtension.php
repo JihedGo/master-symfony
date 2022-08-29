@@ -6,13 +6,9 @@ use Twig\Extension\AbstractExtension;
 use Twig\Extension\GlobalsInterface;
 use Twig\TwigFilter;
 
-class AppExtension extends AbstractExtension implements GlobalsInterface
+class AppExtension extends AbstractExtension
 {
-    private $locale;
-    public function __construct(string $locale)
-    {
-        $this->locale = $locale;
-    }
+
     public function getFilters()
     {
         return [
@@ -20,12 +16,7 @@ class AppExtension extends AbstractExtension implements GlobalsInterface
         ];
     }
 
-    public function getGlobals(): array
-    {
-        return [
-            'locale' => $this->locale
-        ];
-    }
+
 
     public function priceFilter($number)
     {
