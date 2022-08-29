@@ -6,20 +6,55 @@
 			{% block title %}Welcome!
 			{% endblock %}
 		</title>
-		<link
-		rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-		{# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
 		{% block stylesheets %}
-			{{ encore_entry_link_tags('app') }}
-		{% endblock %}
-
-		{% block javascripts %}
-			{{ encore_entry_script_tags('app') }}
+			<link rel="stylesheet" href="{{ asset('build/css/app.css') }}">
 		{% endblock %}
 	</head>
-	<body>
-		{% block body %}
-			{{ message }}
+	<body class="bg-light">
+		<main role="main" class="container">
+			<div class="my-3 p-3 bg-white rounded box-shadow">
+				<h6 class="border-bottom border-gray pb-2 mb-0">Recent updates</h6>
+				<div class="media text-muted pt-3">
+					<img data-src="holder.js/32x32?text=MJ&bg=e83e8c&fg=fff&size=8" alt="" class="mr-2 rounded">
+					<p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+						<span class="d-block">
+							<strong class="text-gray-dark">@username</strong>
+							<small>· 2hrs</small>
+						</span>
+						Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris
+						                condimentum nibh, ut fermentum massa justo sit amet risus.
+					</p>
+				</div>
+				<div class="media text-muted pt-3">
+					<img data-src="holder.js/32x32?text=MJ&bg=e83e8c&fg=fff&size=8" alt="" class="mr-2 rounded">
+					<p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+						<span class="d-block">
+							<strong class="text-gray-dark">@username</strong>
+							<small>· 2hrs</small>
+						</span>
+						Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris
+						                condimentum nibh, ut fermentum massa justo sit amet risus.
+					</p>
+				</div>
+				<div class="media text-muted pt-3">
+					<img data-src="holder.js/32x32?text=MJ&bg=e83e8c&fg=fff&size=8" alt="" class="mr-2 rounded">
+					<p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+						<span class="d-block">
+							<strong class="text-gray-dark">@username</strong>
+							<small>· 2hrs</small>
+						</span>
+						Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris
+						                condimentum nibh, ut fermentum massa justo sit amet risus.
+					</p>
+				</div>
+				<small class="d-block text-right mt-3">
+					<a href="#">All updates</a>
+				</small>
+			</div>
+			{% block body %}{% endblock %}
+		</main>
+		{% block javascripts %}
+			<script src="{{ asset('build/js/app.js') }}"></script>
 		{% endblock %}
 	</body>
 </html>
