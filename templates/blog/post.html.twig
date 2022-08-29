@@ -9,7 +9,10 @@
 	<p>
 		ID:{{ id }}
 	</p>
-	<h1>{{ post.title }}
+	<h1>{{ post.title | upper }}</h1>
+	<p>{{ post.content }}</p>
+	<p>{{ post.created_at | date('H:i') }}</p>
+	<p>
+		{{ 500 | price }}
 	</p>
-</h1>
-<p>{{ post.content }}</p>{% endblock %}
+{% endblock %}

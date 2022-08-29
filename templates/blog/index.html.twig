@@ -7,7 +7,7 @@
 	<p>
 		<a href="{{ path('blog_show',{'id':id}) }}">ID:{{ id }}</a>
 	</p>
-	<h1>{{ post.title }}
+	<h1>{{ post.title | upper }}
 	</p>
 </h1>
 <p>{{ post.content }}</p>{% endfor %}{% endblock %}

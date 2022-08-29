@@ -30,7 +30,6 @@ class BlogController extends AbstractController
      */
     public function index(Request $request): Response
     {
-
         return $this->render('blog/index.html.twig', [
             'posts' => $this->session->get('posts')
         ]);
@@ -47,7 +46,8 @@ class BlogController extends AbstractController
 
         $posts[uniqid()] = [
             'title' => "Random Title " . rand(1, 5),
-            "content" => "a random content " . rand(1, 2)
+            "content" => "a random content " . rand(1, 2),
+            'created_at' => new \DateTime()
         ];
         $this->session->set('posts', $posts);
         return new RedirectResponse($this->router->generate('blog_index'));
