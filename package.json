@@ -16,7 +16,7 @@
         "build": "encore production --progress"
     },
     "dependencies": {
-        "bootstrap": "^4.0.0",
+        "bootstrap": "^4.6.2",
         "holderjs": "^2.9.9",
         "jquery": "^3.6.1",
         "popper.js": "^1.16.1"
