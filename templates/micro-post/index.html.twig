@@ -4,6 +4,12 @@
 {% endblock %}
 {% block body %}
 	<div class="container mt-5">
+		<div class="row">
+			{% for message in app.flashes('notice') %}
+
+				<div class="alert-success">{{ message }}</div>
+			{% endfor %}
+		</div>
 		{% block content %}
 			{% for post in posts %}
 				<div class="row">
@@ -12,7 +18,7 @@
 							<div class="span8">
 								<h4>
 									<strong>
-										<a href="#">Title</a>
+										<a href="{{ path('micro_post_post', {'id':post.id}) }}">Title</a>
 									</strong>
 								</h4>
 							</div>
@@ -68,6 +74,8 @@
 						</div>
 					</div>
 				</div>
+				<a href="{{ path('micro_post_edit', {'id': post.id}) }}" class="btn btn-warning">edit</a>
+				<a href="{{ path('micro_post_delete', {'id': post.id}) }}" class="btn btn-danger">delete</a>
 				<hr>
 			{% endfor %}
 		{% endblock %}

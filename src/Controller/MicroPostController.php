@@ -22,10 +22,9 @@ class MicroPostController extends AbstractController
     public function index(MicroPostRepository $repo): Response
     {
         return $this->render('micro-post/index.html.twig', [
-            'posts' => $repo->findAll()
+            'posts' => $repo->findBy([], ['time' => 'DESC'])
         ]);
     }
-
 
     /**
      * @Route("/add", name="micro_post_add")
@@ -43,6 +42,42 @@ class MicroPostController extends AbstractController
         }
         return $this->render('micro-post/add.html.twig', [
             'form' => $form->createView()
+        ]);
+    }
+    /**
+     * @Route("/edit/{id}", name="micro_post_edit")
+     */
+    public function edit(MicroPost $post, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $form      = $this->createForm(MicroPostType::class, $post);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+            return $this->redirectToRoute('micro_post_index');
+        }
+        return $this->render('micro-post/edit.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/delete/{id}", name="micro_post_delete")
+     */
+    public function delete(MicroPost $post, EntityManagerInterface $entityManager): Response
+    {
+        $entityManager->remove($post);
+        $entityManager->flush();
+        $this->addFlash('notice', 'Micro post was deleted');
+        return $this->redirectToRoute('micro_post_index');
+    }
+
+    /**
+     * @Route("/{id}", name="micro_post_post")
+     */
+    public function post(Request $request, MicroPost $post): Response
+    {
+        return $this->render('micro-post/post.html.twig', [
+            'post' => $post
         ]);
     }
 }
