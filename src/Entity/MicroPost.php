@@ -31,4 +31,24 @@ class MicroPost
     {
         return $this->id;
     }
+
+    public function getText()
+    {
+        return $this->text;
+    }
+
+    public function setText($text): void
+    {
+        $this->text = $text;
+    }
+
+    public function getTime()
+    {
+        return $this->time;
+    }
+
+    public function setTime($time): void
+    {
+        $this->time = $time;
+    }
 }
