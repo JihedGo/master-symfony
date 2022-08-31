@@ -36,6 +36,37 @@ class User implements UserInterface, \Serializable
      */
     private $fullName;
 
+    public function setUsername(string $username)
+    {
+        $this->username = $username;
+    }
+
+
+    public function setPassword(string $password)
+    {
+        $this->password = $password;
+    }
+
+
+    public function setFullname(string $fullName)
+    {
+        $this->fullName = $fullName;
+    }
+
+    public function getFullname()
+    {
+        return $this->fullName;
+    }
+
+    public function setEmail(string $email)
+    {
+        $this->email = $email;
+    }
+
+    public function getEmail()
+    {
+        return $this->email;
+    }
 
 
     public function getId(): ?int
