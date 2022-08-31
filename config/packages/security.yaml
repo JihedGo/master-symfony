@@ -17,6 +17,19 @@ security:
             lazy: true
             #provider: users_in_memory
             pattern: ^/
+            form_login:
+                check_path: security_login
+                login_path: security_login
+                default_target_path: micro_post_index 
+                enable_csrf: true
+                #username_parameter: _username
+                #password_parameter: _password
+                # always_use_default_target_path: false
+                #use_referer: true
+                #failure_path: sec
+            logout:
+                path: security_logout
+                target: micro_post_index
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
 

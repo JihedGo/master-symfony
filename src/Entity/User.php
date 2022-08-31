@@ -6,9 +6,12 @@ use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Serializable;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @UniqueEntity(fiels="username", message="this username is already used")
+ * @UniqueEntity(fiels="email", message="this email is already used")
  */
 class User implements UserInterface, \Serializable
 {
@@ -21,18 +24,31 @@ class User implements UserInterface, \Serializable
 
     /**
      * @ORM\column(type="string",length=50, unique=true)
+     * @Assert\NotBlank()
+     * @Assert\Length(min=5, max=50)
      */
     private $username;
     /**
      * @ORM\column(type="string")
+     * 
      */
     private $password;
+
+    /**
+     * @Assert\NotBlank()
+     * @Assert\Length(min=8,max=4096)
+     */
+    private $plainPassword;
     /**
      * @ORM\column(type="string", length=254, unique=true)
+     * @Assert\NotBlank()
+     * @Assert\Email()
      */
     private $email;
     /**
      * @ORM\column(type="string", length=50)
+     * @Assert\NotBlank()
+     * @Assert\Length(min=4, max=50)
      */
     private $fullName;
 
@@ -108,5 +124,13 @@ class User implements UserInterface, \Serializable
     public function unserialize($serialized)
     {
         list($this->id, $this->username, $this->password) = unserialize($serialized);
+    }
+
+    /**
+     * Get the value of plainPassword
+     */
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
     }
 }
