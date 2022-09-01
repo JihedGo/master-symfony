@@ -2,16 +2,18 @@
 
 namespace App\Entity;
 
-use App\Repository\UserRepository;
-use Doctrine\ORM\Mapping as ORM;
 use Serializable;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Doctrine\ORM\Mapping as ORM;
+use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
- * @UniqueEntity(fiels="username", message="this username is already used")
- * @UniqueEntity(fiels="email", message="this email is already used")
+ * @UniqueEntity(fields="username", message="this username is already used")
+ * @UniqueEntity(fields="email", message="this email is already used")
  */
 class User implements UserInterface, \Serializable
 {
@@ -51,6 +53,18 @@ class User implements UserInterface, \Serializable
      * @Assert\Length(min=4, max=50)
      */
     private $fullName;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\MicroPost", mappedBy="user")
+     */
+    private $posts;
+
+
+
+    public function __construct()
+    {
+        $this->posts = new ArrayCollection();
+    }
 
     public function setUsername(string $username)
     {
@@ -126,11 +140,21 @@ class User implements UserInterface, \Serializable
         list($this->id, $this->username, $this->password) = unserialize($serialized);
     }
 
-    /**
-     * Get the value of plainPassword
-     */
+
     public function getPlainPassword()
     {
         return $this->plainPassword;
+    }
+
+    /**
+     * Set the value of plainPassword
+     *
+     * @return  self
+     */
+    public function setPlainPassword($plainPassword)
+    {
+        $this->plainPassword = $plainPassword;
+
+        return $this;
     }
 }
