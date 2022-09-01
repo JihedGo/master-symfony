@@ -13,7 +13,7 @@ class AppFixtures extends Fixture
     private $encoder;
     private const USERS = [
         [
-            'username' => 'johe_doe',
+            'username' => 'john_doe',
             'email'    => 'john_doe@gmail.com',
             'password' => 'john123',
             'fullName' => 'John Doe'
@@ -62,13 +62,12 @@ class AppFixtures extends Fixture
             $date = new \DateTime();
             $date->modify('-' . rand(0, 10) . ' day');
             $microPost->setTime($date);
-            $rand = rand(0, count(self::USERS) - 1);
-            $microPost->setUser($this->getReference('john_doe'));
-            dump($microPost);
+            $user = $this->getReference(self::USERS[rand(0, count(self::USERS) - 1)]['username']);
+            $microPost->setUser($user);
             $manager->persist($microPost);
         }
 
-        //$manager->flush();
+        $manager->flush();
     }
 
     private function loadUsers(ObjectManager $manager)
@@ -83,6 +82,6 @@ class AppFixtures extends Fixture
             $this->addReference($userData['username'], $user);
             $manager->persist($user);
         }
-        //$manager->flush();
+        $manager->flush();
     }
 }
