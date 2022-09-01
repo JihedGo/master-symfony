@@ -8,7 +8,7 @@
 
 		<!-- Bootstrap CSS -->
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/holder/2.9.8/holder.min.js" integrity="sha512-O6R6IBONpEcZVYJAmSC+20vdsM07uFuGjFf0n/Zthm8sOFW+lAq/OK1WOL8vk93GBDxtMIy6ocbj6lduyeLuqQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 		<title>
 			{% block title %}{% endblock %}
 		</title>
@@ -29,10 +29,22 @@
 					<li class="nav-item">
 						<a class="nav-link" href="#">Blogs</a>
 					</li>
+					{% if is_granted('ROLE_USER') %}
 					<li class="nav-item">
 						<a class="nav-link" href="{{ path('micro_post_add') }}">Add New</a>
 					</li>
-
+					
+					<li class="nav-item">
+						<a class="nav-link" href="#">{{ app.user.username }}</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{{ path('security_logout') }}">Sign out</a>
+					</li>
+					{% else %}
+					<li class="nav-item">
+						<a class="nav-link" href="{{ path('security_login') }}">Sign in</a>
+					</li>
+					{% endif %}
 
 				</ul>
 

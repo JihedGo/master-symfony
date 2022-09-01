@@ -26,7 +26,8 @@
 						<div class="row">
 							<div class="span2">
 								<a href="#" class="thumbnail">
-									<img src="http://placehold.it/260x180" alt="">
+									{% set initials = post.user.fullName|split(' ') %}
+									<img src="holder.js/300x200?text={{ attribute(initials, 0)|first }}{{ attribute(initials, 1)|first }}" style="height:50px;width:50px" alt="">
 								</a>
 							</div>
 							<div class="span6">
@@ -44,7 +45,7 @@
 								<p>
 									<i class="icon-user"></i>
 									by
-									<a href="#">John</a>
+									<a href="#">{{ post.user.username }}</a>
 									|
 									<i class="icon-calendar"></i>
 									{{ post.time | date }}
