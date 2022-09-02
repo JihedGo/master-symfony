@@ -17,6 +17,9 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class User implements UserInterface, \Serializable
 {
+
+    const ROLE_USER = "ROLE_USER";
+    const ROLE_ADMIN = "ROLE_ADMIN";
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -60,6 +63,10 @@ class User implements UserInterface, \Serializable
     private $posts;
 
 
+    /**
+     * @ORM\column(type="simple_array")
+     */
+    private $roles;
 
     public function __construct()
     {
@@ -106,7 +113,12 @@ class User implements UserInterface, \Serializable
 
     public function getRoles()
     {
-        return ['ROLE_USER'];
+        return $this->roles;
+    }
+
+    public function setRoles(array $roles)
+    {
+        $this->roles = $roles;
     }
 
     public function getPassword()
