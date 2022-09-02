@@ -75,8 +75,12 @@
 						</div>
 					</div>
 				</div>
-				<a href="{{ path('micro_post_edit', {'id': post.id}) }}" class="btn btn-warning">edit</a>
-				<a href="{{ path('micro_post_delete', {'id': post.id}) }}" class="btn btn-danger">delete</a>
+				{% if is_granted('edit', post) %}
+					<a href="{{ path('micro_post_edit', {'id': post.id}) }}" class="btn btn-warning">edit</a>
+				{% endif %}
+				{% if is_granted('delete', post) %}
+					<a href="{{ path('micro_post_delete', {'id': post.id}) }}" class="btn btn-danger">delete</a>
+				{% endif %}
 				<hr>
 			{% endfor %}
 		{% endblock %}

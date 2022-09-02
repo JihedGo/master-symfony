@@ -6,10 +6,13 @@ use App\Entity\MicroPost;
 use App\Form\MicroPostType;
 use App\Repository\MicroPostRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
+use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 
 /**
  * @Route("/micro-post")
@@ -47,8 +50,13 @@ class MicroPostController extends AbstractController
     /**
      * @Route("/edit/{id}", name="micro_post_edit")
      */
-    public function edit(MicroPost $post, Request $request, EntityManagerInterface $entityManager): Response
+    public function edit(MicroPost $post, Request $request, EntityManagerInterface $entityManager, AuthorizationCheckerInterface $checker): Response
     {
+        /*if (!$checker->isGranted('edit', $post)) {
+            throw new UnauthorizedHttpException();
+        }*/
+
+        $this->denyAccessUnlessGranted('edit', $post);
         $form      = $this->createForm(MicroPostType::class, $post);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -65,6 +73,7 @@ class MicroPostController extends AbstractController
      */
     public function delete(MicroPost $post, EntityManagerInterface $entityManager): Response
     {
+        $this->denyAccessUnlessGranted('delete', $post);
         $entityManager->remove($post);
         $entityManager->flush();
         $this->addFlash('notice', 'Micro post was deleted');
