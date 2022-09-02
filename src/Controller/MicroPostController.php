@@ -7,7 +7,7 @@ use App\Form\MicroPostType;
 use App\Repository\MicroPostRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -31,10 +31,14 @@ class MicroPostController extends AbstractController
 
     /**
      * @Route("/add", name="micro_post_add")
+     * @Security("is_graned(ROLE_USER)")
      */
     public function add(Request $request, EntityManagerInterface $entityManager): Response
     {
+
+        $user = $this->getUser();
         $microPost = new MicroPost;
+        $microPost->setUser($user);
         $microPost->setTime(new \DateTime());
         $form      = $this->createForm(MicroPostType::class, $microPost);
         $form->handleRequest($request);
