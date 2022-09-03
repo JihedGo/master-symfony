@@ -32,7 +32,7 @@ class MicroPostController extends AbstractController
 
     /**
      * @Route("/add", name="micro_post_add")
-     * @Security("is_graned(ROLE_USER)")
+     * @Security("is_granted('ROLE_USER')")
      */
     public function add(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -40,7 +40,7 @@ class MicroPostController extends AbstractController
         $user = $this->getUser();
         $microPost = new MicroPost;
         $microPost->setUser($user);
-        $microPost->setTime(new \DateTime());
+        // $microPost->setTime(new \DateTime()); replaced by LifeCycleCallback prePersist
         $form      = $this->createForm(MicroPostType::class, $microPost);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
