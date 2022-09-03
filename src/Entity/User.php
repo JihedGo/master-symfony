@@ -169,4 +169,24 @@ class User implements UserInterface, \Serializable
 
         return $this;
     }
+
+    /**
+     * Get the value of posts
+     */
+    public function getPosts()
+    {
+        return $this->posts;
+    }
+
+    /**
+     * Set the value of posts
+     *
+     * @return  self
+     */
+    public function setPosts($posts)
+    {
+        $this->posts = $posts;
+
+        return $this;
+    }
 }
