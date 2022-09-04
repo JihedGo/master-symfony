@@ -91,7 +91,7 @@ class MicroPostController extends AbstractController
     public function userPosts(User $userWithPosts, MicroPostRepository $repo)
     {
         //return $this->render('micro-post/index.html.twig', ['posts' => $repo->findBy(['user' => $userWithPosts], ['time' => 'DESC'])]);
-        return $this->render('micro-post/index.html.twig', ['posts' => $userWithPosts->getPosts()]);
+        return $this->render('micro-post/user-posts.html.twig', ['posts' => $userWithPosts->getPosts(), 'user' => $userWithPosts]);
     }
     /**
      * @Route("/{id}", name="micro_post_post")

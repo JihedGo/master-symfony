@@ -1,0 +1,127 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Blogs!
+{% endblock %}
+{% block body %}
+	<div class="container mt-5">
+		<div class="row">
+			<div class="col">
+				<div class="card">
+					<div class="card-header">
+						<h3 class="card-title">{{ user.fullName }}
+							<small class="text-muted">. @{{ user.username }}</small>
+						</h3>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row mt-2">
+			<div class="col">
+				<div class="card">
+					<div class="card-header p-2 m-2">
+						<h3 class="card-title">Followers</h3>
+					</div>
+					<div class="card-body">
+						<ul class="list-group list-group-flush">
+							{% for follower in user.followers %}
+								<li class="list-group-item">
+									<a href="{{ path('micro_post_user', {'username': follower.username}) }}">@{{ follower.fullName }}</a>
+								</li>
+							{% endfor %}
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="col">
+				<div class="card">
+					<div class="card-header p-2 m-2">
+						<h3 class="card-title">Following</h3>
+					</div>
+					<div class="card-body">
+						<ul class="list-group list-group-flush">
+							{% for following in user.following %}
+								<li class="list-group-item">
+									<a href="{{ path('micro_post_user', {'username': following.username}) }}">@{{ following.fullName }}</a>
+								</li>
+							{% endfor %}
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		{% block content %}
+			{% for post in posts %}
+				<div class="row">
+					<div class="span8">
+						<div class="row">
+							<div class="span8">
+								<h4>
+									<strong>
+										<a href="{{ path('micro_post_post', {'id':post.id}) }}">Title</a>
+									</strong>
+								</h4>
+							</div>
+						</div>
+						<div class="row">
+							<div class="span2">
+								<a href="#" class="thumbnail">
+									{% set initials = post.user.fullName|split(' ') %}
+									<img src="holder.js/300x200?text={{ attribute(initials, 0)|first }}{{ attribute(initials, 1)|first }}" style="height:50px;width:50px" alt="">
+								</a>
+							</div>
+							<div class="span6">
+								<p>
+									{{ post.text }}
+								</p>
+								<p>
+									<a class="btn" href="#">Read more</a>
+								</p>
+							</div>
+						</div>
+						<div class="row">
+							<div class="span8">
+								<p></p>
+								<p>
+									<i class="icon-user"></i>
+									by
+									<a href="{{ path('micro_post_user', {'username' : post.user.username}) }}">{{ post.user.username }}</a>
+									|
+									<i class="icon-calendar"></i>
+									{{ post.time | date }}
+									|
+									<i class="icon-comment"></i>
+									<a href="#">3 Comments</a>
+									|
+									<i class="icon-share"></i>
+									<a href="#">39 Shares</a>
+									|
+									<i class="icon-tags"></i>
+									Tags :
+									<a href="#">
+										<span class="label label-info">Snipp</span>
+									</a>
+									<a href="#">
+										<span class="label label-info">Bootstrap</span>
+									</a>
+									<a href="#">
+										<span class="label label-info">UI</span>
+									</a>
+									<a href="#">
+										<span class="label label-info">growth</span>
+									</a>
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				{% if is_granted('edit', post) %}
+					<a href="{{ path('micro_post_edit', {'id': post.id}) }}" class="btn btn-warning">edit</a>
+				{% endif %}
+				{% if is_granted('delete', post) %}
+					<a href="{{ path('micro_post_delete', {'id': post.id}) }}" class="btn btn-danger">delete</a>
+				{% endif %}
+				<hr>
+			{% endfor %}
+		{% endblock %}
+	</div>
+{% endblock %}
