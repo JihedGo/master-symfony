@@ -24,8 +24,14 @@ class MicroPostController extends AbstractController
      */
     public function index(MicroPostRepository $repo): Response
     {
+        $currentUser = $this->getUser();
+        if ($currentUser instanceof User) {
+            $posts = $repo->findAllByUsers($currentUser->getFollowing());
+        } else {
+            $posts = $repo->findBy([], ['time' => 'DESC']);
+        }
         return $this->render('micro-post/index.html.twig', [
-            'posts' => $repo->findBy([], ['time' => 'DESC'])
+            'posts' => $posts
         ]);
     }
 
