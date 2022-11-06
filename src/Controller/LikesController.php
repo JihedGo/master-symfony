@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Controller;
+
 use App\Entity\MicroPost;
 use App\Entity\User;
 use Symfony\Component\Routing\Annotation\Route;

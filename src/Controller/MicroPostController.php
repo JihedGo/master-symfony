@@ -33,6 +33,7 @@ class MicroPostController extends AbstractController
         } else {
             $posts = $repo->findBy([], ['time' => 'DESC']);
         }
+
         return $this->render('micro-post/index.html.twig', [
             'posts' => $posts,
             'usersToFollow' => $usersToFollow
@@ -105,10 +106,19 @@ class MicroPostController extends AbstractController
     /**
      * @Route("/{id}", name="micro_post_post")
      */
-    public function post(Request $request, MicroPost $post): Response
+    public function post(Request $request, MicroPost $post, MicroPostRepository $repo, UserRepository $userRepo): Response
     {
+        $usersToFollow = [];
+        $currentUser  = $this->getUser();
+        if ($currentUser instanceof User) {
+            $posts = $repo->findAllByUsers($currentUser->getFollowing());
+            $usersToFollow = count($posts) === 0 ? $userRepo->findAllWithMoreThan5PostsExceptUser($currentUser) : [];
+        } else {
+            $posts = $repo->findBy([], ['time' => 'DESC']);
+        }
         return $this->render('micro-post/post.html.twig', [
-            'post' => $post
+            'post' => $post,
+            'usersToFollow' => $usersToFollow
         ]);
     }
 }

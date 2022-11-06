@@ -7,7 +7,7 @@
 
 			<div class="alert-success">{{ message }}</div>
 		{% endfor %}
-		{% if usersToFollow|length > 0 %}
+		{% if usersToFollow | length > 0 %}
 			<p>You currently do not follow anyone, you might find these users interesting :</p>
 			{% for userToFollow in usersToFollow %}
 				<a href="{{ path('following_follow', {'id': userToFollow.id}) }}">@{{ userToFollow.username }}</a>
